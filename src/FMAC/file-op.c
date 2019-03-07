@@ -41,6 +41,7 @@ static char dir_rom[256];   /* ROMイメージファイルの検索ディレク�
 static char dir_disk[256];  /* DISKイメージファイルの検索ディレクトリ */
 static char dir_tape[256];  /* TAPEイメージファイルの基準ディレクトリ */
 static char dir_snap[256];  /* 画面スナップショットファイルの保存先     */
+static char dir_save[256];  /* 上書き用のイメージファイルの保存先        */
 static char dir_state[256]; /* サスペンドファイルの保存先        */
 static char dir_g_cfg[256]; /* 共通設定ファイルのディレクトリ      */
 static char dir_l_cfg[256]; /* 個別設定ファイルのディレクトリ      */
@@ -64,6 +65,7 @@ const char *osd_dir_disk (void) { return dir_disk;  }
 const char *osd_dir_tape (void) { return dir_tape;  }
 const char *osd_dir_snap (void) { return dir_snap;  }
 const char *osd_dir_state(void) { return dir_state; }
+const char *osd_dir_save (void) { return dir_save;  }
 const char *osd_dir_gcfg (void) { return dir_g_cfg; }
 const char *osd_dir_lcfg (void) { return dir_l_cfg; }
 
@@ -82,6 +84,7 @@ int osd_set_dir_disk (const char *d) { return set_new_dir(d, dir_disk);  }
 int osd_set_dir_tape (const char *d) { return set_new_dir(d, dir_tape);  }
 int osd_set_dir_snap (const char *d) { return set_new_dir(d, dir_snap);  }
 int osd_set_dir_state(const char *d) { return set_new_dir(d, dir_state); }
+int osd_set_dir_save (const char *d) { return set_new_dir(d, dir_save);  }
 int osd_set_dir_gcfg (const char *d) { return set_new_dir(d, dir_g_cfg); }
 int osd_set_dir_lcfg (const char *d) { return set_new_dir(d, dir_l_cfg); }
 
@@ -828,6 +831,15 @@ int osd_file_stat(const char *pathname)
     }
 }
 
+/****************************************************************************
+ * 上書き用ファイルのパスの取得
+ ****************************************************************************/
+void osd_file_localname(const char *fullname, char *localname)
+{
+    // TODO
+    strcpy(localname, fullname);
+}
+
 
 
 
@@ -904,6 +916,14 @@ int osd_file_config_init(void)
     dir_state[0] = '\0';
     strcat(dir_state, dir_cwd);
     strcat(dir_state, ":STATE");
+    }
+    
+    /* SAVEディレクトリを設定する */
+
+    if (strlen(dir_save) + sizeof(":SAVE") < 256) {
+    dir_save[0] = '\0';
+    strcat(dir_save, dir_cwd);
+    strcat(dir_save, ":SAVE");
     }
 
 

@@ -54,7 +54,7 @@ const char *osd_dir_disk (void) { return dir_disk;  }
 const char *osd_dir_tape (void) { return dir_tape;  }
 const char *osd_dir_snap (void) { return dir_snap;  }
 const char *osd_dir_state(void) { return dir_state; }
-const char *osd_dir_save(void) { return dir_save; }
+const char *osd_dir_save (void) { return dir_save;  }
 const char *osd_dir_gcfg (void) { return dir_home;  }
 const char *osd_dir_lcfg (void) { return dir_ini;   }
 
@@ -77,7 +77,7 @@ int osd_set_dir_disk (const char *d) { return set_new_dir(d, &dir_disk);  }
 int osd_set_dir_tape (const char *d) { return set_new_dir(d, &dir_tape);  }
 int osd_set_dir_snap (const char *d) { return set_new_dir(d, &dir_snap);  }
 int osd_set_dir_state(const char *d) { return set_new_dir(d, &dir_state); }
-int osd_set_dir_save(const char *d) { return set_new_dir(d, &dir_save); }
+int osd_set_dir_save (const char *d) { return set_new_dir(d, &dir_save);  }
 int osd_set_dir_gcfg (const char *d) { return set_new_dir(d, &dir_home);  }
 int osd_set_dir_lcfg (const char *d) { return set_new_dir(d, &dir_ini);   }
 
@@ -1124,7 +1124,7 @@ int osd_file_config_init(void)
     /* 各ディレクトリが設定できなければ異常終了 */
 
     if (! dir_cwd  || ! dir_home || ! dir_ini  || ! dir_rom  ||
-    ! dir_disk || ! dir_tape || ! dir_snap || ! dir_state || !dir_save)  return FALSE;
+    ! dir_disk || ! dir_tape || ! dir_snap || ! dir_state || ! dir_save)  return FALSE;
 
 
     return TRUE;

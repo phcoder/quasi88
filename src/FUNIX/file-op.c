@@ -32,6 +32,7 @@ static char *dir_disk;  /* DISKイメージファイルの検索ディレクト�
 static char *dir_tape;  /* TAPEイメージファイルの基準ディレクトリ  */
 static char *dir_snap;  /* 画面スナップショットファイルの保存先       */
 static char *dir_state; /* サスペンドファイルの保存先          */
+static char *dir_save;  /* 上書き用のイメージファイルの保存先        */
 static char *dir_g_cfg; /* 共通設定ファイルのディレクトリ        */
 static char *dir_l_cfg; /* 個別設定ファイルのディレクトリ        */
 
@@ -46,6 +47,7 @@ const char *osd_dir_disk (void) { return dir_disk;  }
 const char *osd_dir_tape (void) { return dir_tape;  }
 const char *osd_dir_snap (void) { return dir_snap;  }
 const char *osd_dir_state(void) { return dir_state; }
+const char *osd_dir_save (void) { return dir_save;  }
 const char *osd_dir_gcfg (void) { return dir_g_cfg[0] ? dir_g_cfg : NULL; }
 const char *osd_dir_lcfg (void) { return dir_l_cfg[0] ? dir_l_cfg : NULL; }
 
@@ -64,6 +66,7 @@ int osd_set_dir_disk (const char *d) { return set_new_dir(d, dir_disk);  }
 int osd_set_dir_tape (const char *d) { return set_new_dir(d, dir_tape);  }
 int osd_set_dir_snap (const char *d) { return set_new_dir(d, dir_snap);  }
 int osd_set_dir_state(const char *d) { return set_new_dir(d, dir_state); }
+int osd_set_dir_save (const char *d) { return set_new_dir(d, &dir_save);  }
 int osd_set_dir_gcfg (const char *d) { return set_new_dir(d, dir_g_cfg); }
 int osd_set_dir_lcfg (const char *d) { return set_new_dir(d, dir_l_cfg); }
 
@@ -754,6 +757,15 @@ int osd_file_stat(const char *pathname)
 }
 #endif
 
+/****************************************************************************
+ * 上書き用ファイルのパスの取得
+ ****************************************************************************/
+void osd_file_localname(const char *fullname, char *localname)
+{
+    // TODO
+    strcpy(localname, fullname);
+}
+
 
 
 
@@ -777,6 +789,7 @@ int osd_file_config_init(void)
     char *g_cfg = NULL;
     char *l_cfg = NULL;
     char *state = NULL;
+    char *save  = NULL;
 
     /* ワークを確保 (固定長で処理する予定なので静的確保でもいいんだけど) */
 
@@ -786,12 +799,13 @@ int osd_file_config_init(void)
     dir_tape  = (char *)malloc(OSD_MAX_FILENAME);
     dir_snap  = (char *)malloc(OSD_MAX_FILENAME);
     dir_state = (char *)malloc(OSD_MAX_FILENAME);
+    dir_save =  (char *)malloc(OSD_MAX_FILENAME);
     dir_g_cfg = (char *)malloc(OSD_MAX_FILENAME);
     dir_l_cfg = (char *)malloc(OSD_MAX_FILENAME);
 
 
     if (! dir_cwd  || ! dir_rom   || ! dir_disk  || ! dir_tape || 
-    ! dir_snap || ! dir_state || ! dir_g_cfg || ! dir_l_cfg) return FALSE;
+    ! dir_snap || ! dir_state || ! dir_save || ! dir_g_cfg || ! dir_l_cfg) return FALSE;
 
 
 
@@ -821,6 +835,7 @@ int osd_file_config_init(void)
 #define HOME_QUASI88        "/.quasi88"
 #define HOME_QUASI88_RC     "/.quasi88/rc"
 #define HOME_QUASI88_STATE  "/.quasi88/state"
+#define HOME_QUASI88_SAVE  "/.quasi88/save"
 
     s = malloc(strlen(home) + sizeof(HOME_QUASI88) + 1);
     if (s) {
@@ -850,6 +865,17 @@ int osd_file_config_init(void)
 
         if (make_dir(s)) {
         state = s;
+        } else {
+        free(s);
+        }
+    }
+    
+    s = malloc(strlen(home) + sizeof(HOME_QUASI88_SAVE) + 1);
+    if (s) {
+        sprintf(s, "%s%s", home, HOME_QUASI88_SAVE);
+
+        if (make_dir(s)) {
+        save = s;
         } else {
         free(s);
         }
@@ -916,6 +942,19 @@ int osd_file_config_init(void)
     } else {
         strcpy(dir_state, dir_cwd);
     }
+    
+    
+    /* SAVEディレクトリを設定する */
+
+    s = getenv("QUASI88_SAVE_DIR");        /* $(QUASI88_SAVE_DIR) */
+    if (s && strlen(s) < OSD_MAX_FILENAME) {
+    strcpy(dir_save, s);
+    } else {
+    if (save && strlen(save) < OSD_MAX_FILENAME) {
+        strcpy(dir_save, save);
+    } else {
+        strcpy(dir_save, dir_cwd);
+    }
     }
 
 
@@ -943,6 +982,7 @@ int osd_file_config_init(void)
     if (g_cfg) free(g_cfg);
     if (l_cfg) free(l_cfg);
     if (state) free(state);
+    if (save)  free(save);
 
     return TRUE;
 }
@@ -1057,6 +1097,7 @@ void    osd_file_config_exit(void)
     if (dir_tape)  free(dir_tape);
     if (dir_snap)  free(dir_snap);
     if (dir_state) free(dir_state);
+    if (dir_save)  free(dir_save);
     if (dir_g_cfg) free(dir_g_cfg);
     if (dir_l_cfg) free(dir_l_cfg);
 }
