@@ -449,8 +449,8 @@ void retro_run(void)
 void retro_get_system_info(struct retro_system_info *info)
 {
    memset(info, 0, sizeof(*info));
-   info->library_name     = "QUASI88";
-   info->library_version  = "0.6.4";
+   info->library_name     = Q_TITLE;
+   info->library_version  = Q_VERSION;
    info->need_fullpath    = false;
    info->valid_extensions = "d88";
    info->block_extract    = false;
