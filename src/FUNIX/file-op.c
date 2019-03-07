@@ -942,6 +942,7 @@ int osd_file_config_init(void)
     } else {
         strcpy(dir_state, dir_cwd);
     }
+    }
     
     
     /* SAVEディレクトリを設定する */
