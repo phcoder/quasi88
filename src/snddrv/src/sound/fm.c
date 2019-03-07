@@ -178,11 +178,6 @@
     #define MINOUT      (-128)
 #endif
 
-#ifdef __LIBRETRO__
-    #undef INLINE
-    #define INLINE static
-#endif
-
 
 /*  TL_TAB_LEN is calculated as:
 *   13 - sinus amplitude bits     (Y axis)

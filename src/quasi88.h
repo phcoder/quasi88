@@ -84,6 +84,10 @@ typedef union
 #ifndef INLINE
 #define INLINE  static
 #endif
+#ifdef __LIBRETRO__
+#undef INLINE
+#define INLINE static
+#endif
 
 /*----------------------------------------------------------------------*/
 /* リセット依存の定義                      */

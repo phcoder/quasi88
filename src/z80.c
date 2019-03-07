@@ -111,11 +111,6 @@
 #define M_RDIO(addr)        (z80->io_read)(addr)
 #define M_WRIO(addr,data)   (z80->io_write)(addr,data)
 
-#ifdef __LIBRETRO__
-    #undef INLINE
-    #define INLINE static
-#endif
-
 
 
 

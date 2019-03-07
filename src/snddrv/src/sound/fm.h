@@ -80,6 +80,10 @@ typedef signed int      INT32;   /* signed 32bit   */
 #ifndef INLINE
 #define INLINE static __inline__
 #endif
+#ifdef __LIBRETRO__
+#undef INLINE
+#define INLINE static
+#endif
 
 
 
