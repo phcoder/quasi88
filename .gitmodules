@@ -3,8 +3,10 @@
     url = https://github.com/spurious/SDL-mirror.git
     branch = release-1.2.15
     ignore = dirty
-
 [submodule "dependencies/RAIntegration"]
     path = dependencies/RAIntegration
     url = https://github.com/RetroAchievements/RAIntegration.git
     tag = RAIntegration.0.75.1
+[submodule "dependencies/libretro-common"]
+	path = dependencies/libretro-common
+	url = https://github.com/libretro/libretro-common.git
