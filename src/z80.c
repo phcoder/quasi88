@@ -92,7 +92,7 @@
 #define N_FLAG      (0x02)
 #define C_FLAG      (0x01)
 
-#define ACC     AF.B.h
+#define ACC         AF.B.h
 #define FLAG        AF.B.l
 
 #define M_C()     (z80->FLAG & C_FLAG)
@@ -110,6 +110,11 @@
 #define M_WRMEM(addr,data)  (z80->mem_write)(addr,data)
 #define M_RDIO(addr)        (z80->io_read)(addr)
 #define M_WRIO(addr,data)   (z80->io_write)(addr,data)
+
+#ifdef __LIBRETRO__
+    #undef INLINE
+    #define INLINE static
+#endif
 
 
 

@@ -96,5 +96,9 @@ const char *sound_get_user_gain_name(int index);
 /* driver gain controls on chip outputs */
 void sndti_set_output_gain(int type, int index, int output, float gain);
 
+#ifdef __LIBRETRO__ /* expose to libretro.c */
+extern INT16 *finalmix;
+extern int samples_this_frame;
+#endif
 
 #endif  /* __SOUND_H__ */

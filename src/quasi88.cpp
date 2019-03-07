@@ -97,7 +97,10 @@ void    quasi88_start(void)
     SET_PROC(1);
 
                     /* エミュレート用メモリの確保  */
+
+#ifndef __LIBRETRO__ /* libretro handles this on init instead of start */
     if (memory_allocate() == FALSE) { quasi88_exit(-1); }
+#endif
 
     if (resume_flag) {          /* ステートロード        */
     SET_PROC(2);
@@ -501,7 +504,9 @@ void    quasi88_exec_trace_change(void)
 
 void    quasi88_menu(void)
 {
+#ifndef __LIBRETRO__
     set_mode(MENU);
+#endif
 }
 
 void    quasi88_pause(void)
