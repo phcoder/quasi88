@@ -2,6 +2,7 @@
 #define	FILENAME_H_INCLUDED
 
 #include <stdbool.h>
+#include "filename-common.h"
 
 #ifndef	QUASI88_FLIBRETRO
 #define	QUASI88_FLIBRETRO

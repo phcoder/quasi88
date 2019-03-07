@@ -1,6 +1,7 @@
 #ifndef FILENAME_H_INCLUDED
 #define FILENAME_H_INCLUDED
 
+#include "filename-common.h"
 
 #ifndef QUASI88_FUNIX
 #define QUASI88_FUNIX
