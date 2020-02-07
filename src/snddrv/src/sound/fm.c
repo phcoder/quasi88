@@ -112,9 +112,16 @@
 #include "support.h"        /* use RAINE */
 #endif
 
+#ifdef __LIBRETRO__
+#include <retro_math.h>
+#undef INLINE
+#define INLINE static inline
+#endif
+
 #include "ay8910.h"
 #include "fm.h"
 
+#include "config.h"
 
 /* include external DELTA-T unit (when needed) */
 #if (BUILD_YM2608||BUILD_YM2610||BUILD_YM2610B)
